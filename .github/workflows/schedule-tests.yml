@@ -19,9 +19,7 @@ jobs:
         options: >-
           --workdir /app
           --entrypoint /bin/sh
-        # Use `command` to run the npm install and npm run dev
-        command: >
-          -c "npm install && npm run dev"
+        # We won't use command here as it is not allowed
 
     steps:
       - name: Checkout code
@@ -36,8 +34,10 @@ jobs:
         run: npm install
 
       - name: Start the React app
-        run: npm run dev &  # Start the React app in the background
-      
+        run: |
+          npm run dev &  # Start the React app in the background
+          sleep 10  # Wait for a few seconds to ensure the server is up
+
       - name: Wait for the server to be ready
         run: |
           for i in {1..10}; do
