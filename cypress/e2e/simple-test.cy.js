@@ -4,4 +4,3 @@ describe('Google search', () => {
         cy.get('[name="q"]').type('cypress.io{enter}');
     });
 });
-
