@@ -1,10 +1,11 @@
-name: Scheduled Automation Testing
+name: CI
 
 on:
-  schedule:
-    # Runs at midnight UTC on Tuesdays and Thursdays
-    - cron: '0 0 * * 2,4'
-  workflow_dispatch: # Allows manual triggering of the workflow
+  push:
+    branches: [ "main" ]  # Run on push events to the main branch
+  pull_request:
+    branches: [ "main" ]  # Run on pull request events targeting the main branch
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
   run-tests:
@@ -17,11 +18,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # Specify the version of Node.js you want to use
+          node-version: '22.4.1'  # Specify the version of Node.js to match your local setup
 
       - name: Install Dependencies
         run: npm install  # Install your project dependencies
 
       - name: Run Cypress Tests
         run: |
-          npx cypress run --spec 'cypress/integration/qa/regression*.spec.js'
+
+          npx cypress run --spec 'cypress/e2e/simple-test.cy.js'
