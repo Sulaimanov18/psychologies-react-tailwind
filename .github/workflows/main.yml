@@ -1,0 +1,27 @@
+name: Scheduled Automation Testing
+
+on:
+  schedule:
+    # Runs at midnight UTC on Tuesdays and Thursdays
+    - cron: '0 0 * * 2,4'
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Specify the version of Node.js you want to use
+
+      - name: Install Dependencies
+        run: npm install  # Install your project dependencies
+
+      - name: Run Cypress Tests
+        run: |
+          npx cypress run --spec 'cypress/integration/qa/regression*.spec.js'
