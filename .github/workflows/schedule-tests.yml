@@ -2,10 +2,10 @@ name: CI
 
 on:
   push:
-    branches: [ "main" ]  # Run on push events to the main branch
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]  # Run on pull request events targeting the main branch
-  workflow_dispatch:  # Allows manual triggering of the workflow
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   run-tests:
@@ -13,17 +13,16 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '22.4.1'  # Specify the version of Node.js to match your local setup
+          node-version: '22.4.1'  # Match the Node.js version to your local environment
 
       - name: Install Dependencies
-        run: npm install  # Install your project dependencies
+        run: npm install
 
       - name: Run Cypress Tests
         run: |
-
           npx cypress run --spec 'cypress/e2e/simple-test.cy.js'
